@@ -1,38 +1,32 @@
-import logo from "./logo.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
-import { useState, useEffect } from "react";
 import GifImg from "./GifImg";
 
 function App() {
-  const [gifs, setGifs] = useState([]);
+  const [gifList, setGifList] = useState([]);
+  const [url, setUrl] = useState("");
 
-  const apikey = ""; /* insertar su api de Giphy luego de registrarse */
-  let keyword = "dogs";
-  const url = `http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${apikey}`;
+  const apikey = "YdRG7nj8w8JdpJHzyy1NUMm8hEiHfqPR";
 
-  /*  fetch(url)
-    .then((respuesta) => respuesta.json())
-    .then((json) => setGifs(json.data)); */
+  function handleSearch( keyword){
+    setUrl(`http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${apikey}`)
+  }
 
-  function handleSearch(event) {
-    event.preventDefault();
-    let keyword = event.target.children[0].value; /* el input */
-    const url = `http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${apikey}`;
-
+  useEffect(() => {
     fetch(url)
       .then((respuesta) => respuesta.json())
-      .then((json) => setGifs(json.data));
-  }
+      .then((json) => setGifList(json.data));
+  }, []);
+
 
   return (
     <div className="App">
+      <button onClick={()=>handleSearch("dogs")}>Buscar Perritos</button>
+      <button onClick={()=>handleSearch("cats")}>Buscar Gatitos</button>
+      <button onClick={()=>handleSearch("pokemon")}>Buscar Pokemons</button>
       <h1>Gifs Coderhouse</h1>
-      <form onSubmit={handleSearch}>
-        <input id="searchText"></input>
-        <button>Buscar</button>
-      </form>
-      {gifs.map((item) => (
-        <GifImg title={item.title} url={item.images.original.url} />
+      {gifList.map((item) => (
+        <GifImg key={item.id} title={item.title} url={item.images.original.url} />
       ))}
     </div>
   );
