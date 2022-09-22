@@ -6,7 +6,7 @@ function App() {
   const [gifList, setGifList] = useState([]);
   const [url, setUrl] = useState("");
 
-  const apikey = "YdRG7nj8w8JdpJHzyy1NUMm8hEiHfqPR";
+  const apikey = "inserta-tu-apikey";
 
   function handleSearch( keyword){
     setUrl(`http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${apikey}`)
