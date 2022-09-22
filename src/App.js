@@ -16,7 +16,7 @@ function App() {
     fetch(url)
       .then((respuesta) => respuesta.json())
       .then((json) => setGifList(json.data));
-  }, []);
+  }, [url]);
 
 
   return (
