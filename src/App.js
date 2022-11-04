@@ -7,27 +7,23 @@ function App() {
 
   const keyword = "pokemon";
   const apikey = "YdRG7nj8w8JdpJHzyy1NUMm8hEiHfqPR";
+
   const url = `http://api.giphy.com/v1/gifs/search?q=${keyword}&api_key=${apikey}`;
 
-  const apiFetch = async () => {
-    const response = await  fetch(url);
-    const json = await response.json();
-    setGifList(json.data)
-  }
-
-  useEffect( () => {
-    apiFetch();     
+  useEffect(() => {
+    fetch(url)
+      .then((respuestahttp) => respuestahttp.json())
+      .then((jsonData) => {
+        console.log(jsonData);
+        setGifList(jsonData.data);
+      });
   }, []);
 
   return (
     <div className="App">
       <h1>Gifs Coderhouse</h1>
-      {gifList.map((item) => (
-        <GifImg
-          key={item.id}
-          title={item.title}
-          url={item.images.original.url}
-        />
+      {gifList.map((gif) => (
+        <GifImg key={gif.id} title={gif.title} url={gif.images.downsized.url} />
       ))}
     </div>
   );
